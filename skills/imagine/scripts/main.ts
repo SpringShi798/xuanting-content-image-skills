@@ -161,7 +161,7 @@ Environment variables:
   BAOYU_IMAGE_GEN_<PROVIDER>_CONCURRENCY  Override provider concurrency
   BAOYU_IMAGE_GEN_<PROVIDER>_START_INTERVAL_MS  Override provider start gap in ms
 
-Env file load order: CLI args > EXTEND.md > process.env > <cwd>/.baoyu-skills/.env > ~/.baoyu-skills/.env`);
+Env file load order: CLI args > EXTEND.md > process.env > <cwd>/.xuanting-skills/.env > ~/.xuanting-skills/.env`);
 }
 
 export function parseArgs(argv: string[]): CliArgs {
@@ -373,8 +373,8 @@ async function loadEnv(): Promise<void> {
   const home = homedir();
   const cwd = process.cwd();
 
-  const homeEnv = await loadEnvFile(path.join(home, ".baoyu-skills", ".env"));
-  const cwdEnv = await loadEnvFile(path.join(cwd, ".baoyu-skills", ".env"));
+  const homeEnv = await loadEnvFile(path.join(home, ".xuanting-skills", ".env"));
+  const cwdEnv = await loadEnvFile(path.join(cwd, ".xuanting-skills", ".env"));
 
   for (const [k, v] of Object.entries(homeEnv)) {
     if (!process.env[k]) process.env[k] = v;
@@ -528,12 +528,12 @@ type ExtendConfigPathPair = {
 function getExtendConfigPathPairs(cwd: string, home: string): ExtendConfigPathPair[] {
   return [
     {
-      current: path.join(cwd, ".baoyu-skills", "imagine", "EXTEND.md"),
-      legacy: path.join(cwd, ".baoyu-skills", "baoyu-image-gen", "EXTEND.md"),
+      current: path.join(cwd, ".xuanting-skills", "imagine", "EXTEND.md"),
+      legacy: path.join(cwd, ".xuanting-skills", "baoyu-image-gen", "EXTEND.md"),
     },
     {
-      current: path.join(home, ".baoyu-skills", "imagine", "EXTEND.md"),
-      legacy: path.join(home, ".baoyu-skills", "baoyu-image-gen", "EXTEND.md"),
+      current: path.join(home, ".xuanting-skills", "imagine", "EXTEND.md"),
+      legacy: path.join(home, ".xuanting-skills", "baoyu-image-gen", "EXTEND.md"),
     },
   ];
 }
@@ -792,7 +792,7 @@ export function detectProvider(args: CliArgs): Provider {
 
   throw new Error(
     "No API key found. Set GOOGLE_API_KEY, GEMINI_API_KEY, OPENAI_API_KEY, AZURE_OPENAI_API_KEY+AZURE_OPENAI_BASE_URL, OPENROUTER_API_KEY, GRSAI_API_KEY, DASHSCOPE_API_KEY, ZAI_API_KEY, MINIMAX_API_KEY, REPLICATE_API_TOKEN, JIMENG keys, or ARK_API_KEY.\n" +
-      "Create ~/.baoyu-skills/.env or <cwd>/.baoyu-skills/.env with your keys."
+      "Create ~/.xuanting-skills/.env or <cwd>/.xuanting-skills/.env with your keys."
   );
 }
 

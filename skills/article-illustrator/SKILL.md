@@ -100,9 +100,9 @@ Check EXTEND.md in priority order — the first one found wins:
 
 | Priority | Path | Scope |
 |----------|------|-------|
-| 1 | `.baoyu-skills/article-illustrator/EXTEND.md` | Project |
-| 2 | `${XDG_CONFIG_HOME:-$HOME/.config}/baoyu-skills/article-illustrator/EXTEND.md` | XDG |
-| 3 | `$HOME/.baoyu-skills/article-illustrator/EXTEND.md` | User home |
+| 1 | `.xuanting-skills/article-illustrator/EXTEND.md` | Project |
+| 2 | `${XDG_CONFIG_HOME:-$HOME/.config}/xuanting-skills/article-illustrator/EXTEND.md` | XDG |
+| 3 | `$HOME/.xuanting-skills/article-illustrator/EXTEND.md` | User home |
 
 | Result | Action |
 |--------|--------|

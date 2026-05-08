@@ -40,9 +40,12 @@ Dropped: `comic`, `compress-image`, `danger-gemini-web`, `danger-x-to-markdown`,
 
 Invocation is now `/image-cards` instead of `/baoyu-image-cards`. Internal cross-references (e.g., `image-cards` → `imagine` backend resolution) updated accordingly.
 
-The configuration directory namespace **`baoyu-skills/`** is intentionally preserved (e.g., `~/.baoyu-skills/.env`, `~/.config/baoyu-skills/<skill>/EXTEND.md`) for two reasons:
-- Backward-compatible with any existing baoyu config
-- Keeps the original author's namespace as a form of credit
+All configuration paths use the namespace **`xuanting-skills/`** (changed from upstream's `baoyu-skills/`):
+- API keys: `~/.xuanting-skills/.env`
+- Per-skill preferences: `~/.config/xuanting-skills/<skill>/EXTEND.md` (XDG) or `~/.xuanting-skills/<skill>/EXTEND.md` (user home)
+- Project-local overrides: `.xuanting-skills/<skill>/EXTEND.md`
+
+If you previously had configs at `~/.baoyu-skills/`, migrate with: `mv ~/.baoyu-skills ~/.xuanting-skills`
 
 ### 3. Added `grsai` provider to `imagine`
 
@@ -58,8 +61,8 @@ Patches to:
 **Usage**:
 
 ```bash
-# Set GRSAI_API_KEY in ~/.baoyu-skills/.env
-echo 'GRSAI_API_KEY=sk-your-key-here' >> ~/.baoyu-skills/.env
+# Set GRSAI_API_KEY in ~/.xuanting-skills/.env
+echo 'GRSAI_API_KEY=sk-your-key-here' >> ~/.xuanting-skills/.env
 
 # Then call /image-cards or /infographic; they will pick up grsai automatically
 # Or force it explicitly:
@@ -96,12 +99,12 @@ cd ~/projects/xuanting-content-image-skills && git pull && bash install.sh
 Each skill's settings live at:
 
 ```
-~/.config/baoyu-skills/<skill-name>/EXTEND.md      # XDG-style (preferred)
-~/.baoyu-skills/<skill-name>/EXTEND.md             # User home fallback
-.baoyu-skills/<skill-name>/EXTEND.md               # Project-local override
+~/.config/xuanting-skills/<skill-name>/EXTEND.md      # XDG-style (preferred)
+~/.xuanting-skills/<skill-name>/EXTEND.md             # User home fallback
+.xuanting-skills/<skill-name>/EXTEND.md               # Project-local override
 ```
 
-API keys live in `~/.baoyu-skills/.env` (chmod 600):
+API keys live in `~/.xuanting-skills/.env` (chmod 600):
 
 ```
 GRSAI_API_KEY=sk-...
@@ -110,15 +113,15 @@ WECHAT_APP_ID=...         # for post-to-wechat
 WECHAT_APP_SECRET=...
 ```
 
-Set `default_provider: grsai` in `~/.config/baoyu-skills/imagine/EXTEND.md` to make grsai the default backend for all image generation.
+Set `default_provider: grsai` in `~/.config/xuanting-skills/imagine/EXTEND.md` to make grsai the default backend for all image generation.
 
 ## Why fork instead of just patching?
 
-The upstream `baoyu-skills` is a marketplace plugin distributed via Claude Code's plugin system. Patching the installed copy would be overwritten on every update. Forking + installing as a plain skill set avoids this friction and gives full control over which skills load and how `imagine` resolves backends.
+The upstream `xuanting-skills` is a marketplace plugin distributed via Claude Code's plugin system. Patching the installed copy would be overwritten on every update. Forking + installing as a plain skill set avoids this friction and gives full control over which skills load and how `imagine` resolves backends.
 
 ## Tracking upstream
 
-When `baoyu-skills` upstream releases new features I want, the workflow is:
+When `xuanting-skills` upstream releases new features I want, the workflow is:
 
 1. Check [JimLiu/baoyu-skills commits](https://github.com/JimLiu/baoyu-skills/commits/main)
 2. Cherry-pick relevant changes manually into this fork
@@ -128,4 +131,4 @@ Not automated — by design, so I can review changes before they affect my conte
 
 ## License
 
-MIT-0 (inherited from baoyu-skills upstream).
+MIT-0 (inherited from xuanting-skills upstream).

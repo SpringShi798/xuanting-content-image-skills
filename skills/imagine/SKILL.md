@@ -37,14 +37,14 @@ Check these paths in order; first hit wins:
 
 | Path | Scope |
 |------|-------|
-| `.baoyu-skills/imagine/EXTEND.md` | Project |
-| `${XDG_CONFIG_HOME:-$HOME/.config}/baoyu-skills/imagine/EXTEND.md` | XDG |
-| `$HOME/.baoyu-skills/imagine/EXTEND.md` | User home |
+| `.xuanting-skills/imagine/EXTEND.md` | Project |
+| `${XDG_CONFIG_HOME:-$HOME/.config}/xuanting-skills/imagine/EXTEND.md` | XDG |
+| `$HOME/.xuanting-skills/imagine/EXTEND.md` | User home |
 
 - **Found** → load, parse, apply. If `default_model.[provider]` is null → ask model only.
 - **Not found** → run first-time setup (`references/config/first-time-setup.md`) using AskUserQuestion to collect provider + model + quality + save location. Save EXTEND.md, then continue. Do not generate images before this completes.
 
-Legacy compatibility: if `.baoyu-skills/baoyu-image-gen/EXTEND.md` exists and the new path doesn't, the runtime renames it to `imagine`. If both exist, the runtime leaves them alone and uses the new path.
+Legacy compatibility: if `.xuanting-skills/baoyu-image-gen/EXTEND.md` exists and the new path doesn't, the runtime renames it to `imagine`. If both exist, the runtime leaves them alone and uses the new path.
 
 **EXTEND.md keys**: default provider, default quality, default aspect ratio, default image size, OpenAI image API dialect, default models, batch worker cap, provider-specific batch limits. Schema: `references/config/preferences-schema.md`.
 
@@ -120,7 +120,7 @@ ${BUN_X} {baseDir}/scripts/main.ts --batchfile batch.json --jobs 4
 | `BAOYU_IMAGE_GEN_<PROVIDER>_CONCURRENCY` | Per-provider concurrency (e.g., `BAOYU_IMAGE_GEN_REPLICATE_CONCURRENCY`) |
 | `BAOYU_IMAGE_GEN_<PROVIDER>_START_INTERVAL_MS` | Per-provider start-gap |
 
-**Load priority**: CLI args > EXTEND.md > env vars > `<cwd>/.baoyu-skills/.env` > `~/.baoyu-skills/.env`
+**Load priority**: CLI args > EXTEND.md > env vars > `<cwd>/.xuanting-skills/.env` > `~/.xuanting-skills/.env`
 
 ## Model Resolution
 

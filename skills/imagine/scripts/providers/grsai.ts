@@ -140,38 +140,41 @@ async function postGrsaiViaFetch(
 async function postGrsai(payload: unknown): Promise<GrsaiResponse> {
   const apiKey = getGrsaiApiKey();
   if (!apiKey) throw new Error("GRSAI_API_KEY is required");
-  const proxy = getHttpProxy();
-  // Same fetch-vs-curl split as google.ts: under HTTP proxy, use curl to
-  // avoid Bun fetch's long-lived socket close issue.
-  if (proxy) return postGrsaiViaCurl(payload, apiKey);
-  return postGrsaiViaFetch(payload, apiKey);
+  // Default to curl: Bun's fetch fails with "unknown certificate verification
+  // error" under macOS system-level proxies (Surge/Clash TUN mode etc.) that
+  // don't expose http_proxy env vars. curl uses macOS native networking so it
+  // sees system proxies correctly. Set GRSAI_USE_FETCH=1 to opt into fetch.
+  if (process.env.GRSAI_USE_FETCH === "1") {
+    return postGrsaiViaFetch(payload, apiKey);
+  }
+  return postGrsaiViaCurl(payload, apiKey);
 }
 
 async function downloadImage(url: string): Promise<Uint8Array> {
-  const proxy = getHttpProxy();
-  if (proxy) {
-    const args = [
-      "-s",
-      "-L",
-      "--connect-timeout",
-      "30",
-      "--max-time",
-      "120",
-      "-x",
-      proxy,
-      "-o",
-      "-",
-      url,
-    ];
-    const buf = execFileSync("curl", args, {
-      maxBuffer: 200 * 1024 * 1024,
-      timeout: 130000,
-    });
-    return new Uint8Array(buf);
+  // Same reason as postGrsai: default to curl so macOS system proxies work.
+  if (process.env.GRSAI_USE_FETCH === "1") {
+    const res = await fetch(url, { signal: AbortSignal.timeout(120_000) });
+    if (!res.ok) throw new Error(`Failed to download image (${res.status})`);
+    return new Uint8Array(await res.arrayBuffer());
   }
-  const res = await fetch(url, { signal: AbortSignal.timeout(120_000) });
-  if (!res.ok) throw new Error(`Failed to download image (${res.status})`);
-  return new Uint8Array(await res.arrayBuffer());
+  const proxy = getHttpProxy();
+  const args = [
+    "-s",
+    "-L",
+    "--connect-timeout",
+    "30",
+    "--max-time",
+    "120",
+    ...(proxy ? ["-x", proxy] : []),
+    "-o",
+    "-",
+    url,
+  ];
+  const buf = execFileSync("curl", args, {
+    maxBuffer: 200 * 1024 * 1024,
+    timeout: 130000,
+  });
+  return new Uint8Array(buf);
 }
 
 async function readImageAsBase64DataUrl(p: string): Promise<string> {

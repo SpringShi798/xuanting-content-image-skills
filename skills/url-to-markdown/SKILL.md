@@ -41,9 +41,9 @@ Check EXTEND.md in priority order — the first one found wins:
 
 | Priority | Path | Scope |
 |----------|------|-------|
-| 1 | `.baoyu-skills/url-to-markdown/EXTEND.md` | Project |
-| 2 | `${XDG_CONFIG_HOME:-$HOME/.config}/baoyu-skills/url-to-markdown/EXTEND.md` | XDG |
-| 3 | `$HOME/.baoyu-skills/url-to-markdown/EXTEND.md` | User home |
+| 1 | `.xuanting-skills/url-to-markdown/EXTEND.md` | Project |
+| 2 | `${XDG_CONFIG_HOME:-$HOME/.config}/xuanting-skills/url-to-markdown/EXTEND.md` | XDG |
+| 3 | `$HOME/.xuanting-skills/url-to-markdown/EXTEND.md` | User home |
 
 | Result | Action |
 |--------|--------|
@@ -64,8 +64,8 @@ When EXTEND.md is not found, you **MUST** use `AskUserQuestion` to gather prefer
   - "url-to-markdown (Recommended)" — Save to `./url-to-markdown/{domain}/{slug}.md`
   - User may pick "Other" and type a custom path
 - **Q3 — Save** (header "Save"): "Where to save preferences?"
-  - "User (Recommended)" — `~/.baoyu-skills/` (all projects)
-  - "Project" — `.baoyu-skills/` (this project only)
+  - "User (Recommended)" — `~/.xuanting-skills/` (all projects)
+  - "Project" — `.xuanting-skills/` (this project only)
 
 After answers, write EXTEND.md, confirm "Preferences saved to [path]", then continue.
 
@@ -132,7 +132,7 @@ ${READER} <url> --adapter youtube --output transcript.md
 | `--media-dir <dir>` | Base directory for downloaded media (default: same as `--output` directory) |
 | `--cdp-url <url>` | Reuse existing Chrome DevTools Protocol endpoint |
 | `--browser-path <path>` | Custom Chrome/Chromium binary path |
-| `--chrome-profile-dir <path>` | Chrome user data directory (default: `BAOYU_CHROME_PROFILE_DIR` env or `./baoyu-skills/chrome-profile`) |
+| `--chrome-profile-dir <path>` | Chrome user data directory (default: `BAOYU_CHROME_PROFILE_DIR` env or `./xuanting-skills/chrome-profile`) |
 | `--debug-dir <dir>` | Write debug artifacts (document.json, markdown.md, page.html, network.json) |
 
 ## Agent Quality Gate

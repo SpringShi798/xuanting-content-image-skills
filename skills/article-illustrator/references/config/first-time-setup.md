@@ -94,17 +94,17 @@ header: "Save"
 question: "Where to save preferences?"
 options:
   - label: "Project"
-    description: ".baoyu-skills/ (this project only)"
+    description: ".xuanting-skills/ (this project only)"
   - label: "User"
-    description: "~/.baoyu-skills/ (all projects)"
+    description: "~/.xuanting-skills/ (all projects)"
 ```
 
 ## Save Locations
 
 | Choice | Path | Scope |
 |--------|------|-------|
-| Project | `.baoyu-skills/article-illustrator/EXTEND.md` | Current project |
-| User | `~/.baoyu-skills/article-illustrator/EXTEND.md` | All projects |
+| Project | `.xuanting-skills/article-illustrator/EXTEND.md` | Current project |
+| User | `~/.xuanting-skills/article-illustrator/EXTEND.md` | All projects |
 
 ## After Setup
 

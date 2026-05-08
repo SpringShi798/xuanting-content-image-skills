@@ -150,17 +150,17 @@ header: "Save"
 question: "Where to save preferences?"
 options:
   - label: "Project (Recommended)"
-    description: ".baoyu-skills/ (this project only)"
+    description: ".xuanting-skills/ (this project only)"
   - label: "User"
-    description: "~/.baoyu-skills/ (all projects)"
+    description: "~/.xuanting-skills/ (all projects)"
 ```
 
 ## Save Locations
 
 | Choice | Path | Scope |
 |--------|------|-------|
-| Project | `.baoyu-skills/cover-image/EXTEND.md` | Current project |
-| User | `~/.baoyu-skills/cover-image/EXTEND.md` | All projects |
+| Project | `.xuanting-skills/cover-image/EXTEND.md` | Current project |
+| User | `~/.xuanting-skills/cover-image/EXTEND.md` | All projects |
 
 ## After Setup
 

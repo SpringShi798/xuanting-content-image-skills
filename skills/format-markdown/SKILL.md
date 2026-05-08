@@ -43,9 +43,9 @@ Check EXTEND.md in priority order — the first one found wins:
 
 | Priority | Path | Scope |
 |----------|------|-------|
-| 1 | `.baoyu-skills/format-markdown/EXTEND.md` | Project |
-| 2 | `${XDG_CONFIG_HOME:-$HOME/.config}/baoyu-skills/format-markdown/EXTEND.md` | XDG |
-| 3 | `$HOME/.baoyu-skills/format-markdown/EXTEND.md` | User home |
+| 1 | `.xuanting-skills/format-markdown/EXTEND.md` | Project |
+| 2 | `${XDG_CONFIG_HOME:-$HOME/.config}/xuanting-skills/format-markdown/EXTEND.md` | XDG |
+| 3 | `$HOME/.xuanting-skills/format-markdown/EXTEND.md` | User home |
 
 If none found, use defaults — no first-time setup required for this skill.
 

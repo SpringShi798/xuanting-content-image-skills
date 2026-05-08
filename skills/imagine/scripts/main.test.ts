@@ -205,8 +205,8 @@ test("loadExtendConfig renames legacy EXTEND.md when the new path is missing", a
   const root = await makeTempDir("imagine-extend-");
   const cwd = path.join(root, "project");
   const home = path.join(root, "home");
-  const legacyPath = path.join(cwd, ".baoyu-skills", "baoyu-image-gen", "EXTEND.md");
-  const currentPath = path.join(cwd, ".baoyu-skills", "imagine", "EXTEND.md");
+  const legacyPath = path.join(cwd, ".xuanting-skills", "baoyu-image-gen", "EXTEND.md");
+  const currentPath = path.join(cwd, ".xuanting-skills", "imagine", "EXTEND.md");
 
   await fs.mkdir(path.dirname(legacyPath), { recursive: true });
   await fs.mkdir(home, { recursive: true });
@@ -228,8 +228,8 @@ test("loadExtendConfig leaves legacy EXTEND.md untouched when both paths exist",
   const root = await makeTempDir("imagine-extend-dual-");
   const cwd = path.join(root, "project");
   const home = path.join(root, "home");
-  const legacyPath = path.join(cwd, ".baoyu-skills", "baoyu-image-gen", "EXTEND.md");
-  const currentPath = path.join(cwd, ".baoyu-skills", "imagine", "EXTEND.md");
+  const legacyPath = path.join(cwd, ".xuanting-skills", "baoyu-image-gen", "EXTEND.md");
+  const currentPath = path.join(cwd, ".xuanting-skills", "imagine", "EXTEND.md");
 
   await fs.mkdir(path.dirname(legacyPath), { recursive: true });
   await fs.mkdir(path.dirname(currentPath), { recursive: true });

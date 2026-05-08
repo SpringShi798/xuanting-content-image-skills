@@ -45,9 +45,9 @@ Check these paths in order; first hit wins:
 
 | Path | Scope |
 |------|-------|
-| `.baoyu-skills/post-to-wechat/EXTEND.md` | Project |
-| `${XDG_CONFIG_HOME:-$HOME/.config}/baoyu-skills/post-to-wechat/EXTEND.md` | XDG |
-| `$HOME/.baoyu-skills/post-to-wechat/EXTEND.md` | User home |
+| `.xuanting-skills/post-to-wechat/EXTEND.md` | Project |
+| `${XDG_CONFIG_HOME:-$HOME/.config}/xuanting-skills/post-to-wechat/EXTEND.md` | XDG |
+| `$HOME/.xuanting-skills/post-to-wechat/EXTEND.md` | User home |
 
 Found → read, parse, apply. Not found → run first-time setup (`references/config/first-time-setup.md`) before anything else.
 
@@ -94,12 +94,12 @@ Checks: Chrome, profile isolation, Bun, Accessibility, clipboard, paste keystrok
 | Check fails | Fix |
 |-------------|-----|
 | Chrome | Install Chrome or set `WECHAT_BROWSER_CHROME_PATH` |
-| Profile dir | Shared profile at `baoyu-skills/chrome-profile` |
+| Profile dir | Shared profile at `xuanting-skills/chrome-profile` |
 | Bun runtime | `brew install oven-sh/bun/bun` or `npm install -g bun` |
 | Accessibility (macOS) | System Settings → Privacy & Security → Accessibility → enable terminal app |
 | Clipboard copy | Ensure Swift/AppKit (macOS: `xcode-select --install`) |
 | Paste keystroke (Linux) | Install `xdotool` (X11) or `ydotool` (Wayland) |
-| API credentials | Follow guided setup in Step 2, or set in `.baoyu-skills/.env` |
+| API credentials | Follow guided setup in Step 2, or set in `.xuanting-skills/.env` |
 
 ## Image-Text Posting (图文)
 
@@ -151,7 +151,7 @@ Ask method unless specified in EXTEND.md or CLI:
 | `api` (Recommended) | Fast | API credentials |
 | `browser` | Slow | Chrome + logged-in session |
 
-**API selected + missing credentials** → run guided setup per `references/api-setup.md` (writes to `.baoyu-skills/.env`).
+**API selected + missing credentials** → run guided setup per `references/api-setup.md` (writes to `.xuanting-skills/.env`).
 
 ### Step 3: Resolve Theme/Color and Validate Metadata
 

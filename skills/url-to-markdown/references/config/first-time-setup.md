@@ -75,17 +75,17 @@ header: "Save"
 question: "Where to save preferences?"
 options:
   - label: "User (Recommended)"
-    description: "~/.baoyu-skills/ (all projects)"
+    description: "~/.xuanting-skills/ (all projects)"
   - label: "Project"
-    description: ".baoyu-skills/ (this project only)"
+    description: ".xuanting-skills/ (this project only)"
 ```
 
 ## Save Locations
 
 | Choice | Path | Scope |
 |--------|------|-------|
-| User | `~/.baoyu-skills/url-to-markdown/EXTEND.md` | All projects |
-| Project | `.baoyu-skills/url-to-markdown/EXTEND.md` | Current project |
+| User | `~/.xuanting-skills/url-to-markdown/EXTEND.md` | All projects |
+| Project | `.xuanting-skills/url-to-markdown/EXTEND.md` | Current project |
 
 ## After Setup
 

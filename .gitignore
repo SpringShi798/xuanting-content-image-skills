@@ -16,10 +16,10 @@ bun.lockb
 dist/
 build/
 
-# secrets / configs (should live in ~/.baoyu-skills/)
+# secrets / configs (should live in ~/.xuanting-skills/)
 .env
 .env.local
-.baoyu-skills/
+.xuanting-skills/
 
 # generated content (image-cards work dirs etc)
 image-cards/

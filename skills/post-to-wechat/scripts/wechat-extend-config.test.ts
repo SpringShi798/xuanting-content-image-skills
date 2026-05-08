@@ -68,7 +68,7 @@ async function makeTempDir(prefix: string): Promise<string> {
 }
 
 async function writeEnvFile(root: string, content: string): Promise<void> {
-  const envPath = path.join(root, ".baoyu-skills", ".env");
+  const envPath = path.join(root, ".xuanting-skills", ".env");
   await fs.mkdir(path.dirname(envPath), { recursive: true });
   await fs.writeFile(envPath, content);
 }
@@ -91,7 +91,7 @@ test("loadCredentials selects the first complete source without mixing values ac
 
   assert.equal(credentials.appId, "cwd-app-id");
   assert.equal(credentials.appSecret, "cwd-app-secret");
-  assert.equal(credentials.source, "<cwd>/.baoyu-skills/.env");
+  assert.equal(credentials.source, "<cwd>/.xuanting-skills/.env");
   assert.deepEqual(credentials.skippedSources, [
     "process.env missing WECHAT_APP_ID",
   ]);
@@ -134,6 +134,6 @@ test("loadCredentials reports skipped incomplete sources when no complete pair e
 
   assert.throws(
     () => loadCredentials(),
-    /Incomplete credential sources skipped:\n- process\.env missing WECHAT_APP_SECRET\n- <cwd>\/\.baoyu-skills\/\.env missing WECHAT_APP_ID/,
+    /Incomplete credential sources skipped:\n- process\.env missing WECHAT_APP_SECRET\n- <cwd>\/\.xuanting-skills\/\.env missing WECHAT_APP_ID/,
   );
 });

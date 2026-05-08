@@ -148,9 +148,9 @@ Check EXTEND.md in priority order — the first one found wins:
 
 | Priority | Path | Scope |
 |----------|------|-------|
-| 1 | `.baoyu-skills/cover-image/EXTEND.md` | Project |
-| 2 | `${XDG_CONFIG_HOME:-$HOME/.config}/baoyu-skills/cover-image/EXTEND.md` | XDG |
-| 3 | `$HOME/.baoyu-skills/cover-image/EXTEND.md` | User home |
+| 1 | `.xuanting-skills/cover-image/EXTEND.md` | Project |
+| 2 | `${XDG_CONFIG_HOME:-$HOME/.config}/xuanting-skills/cover-image/EXTEND.md` | XDG |
+| 3 | `$HOME/.xuanting-skills/cover-image/EXTEND.md` | User home |
 
 | Result | Action |
 |--------|--------|

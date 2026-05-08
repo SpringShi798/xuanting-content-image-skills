@@ -41,7 +41,7 @@ export function resolveSharedChromeProfileDir(
     }
   }
 
-  const appDataDirName = options.appDataDirName ?? "baoyu-skills";
+  const appDataDirName = options.appDataDirName ?? "xuanting-skills";
   const profileDirName = options.profileDirName ?? "chrome-profile";
   return path.join(resolveDataBaseDir(), appDataDirName, profileDirName);
 }
@@ -53,7 +53,7 @@ export function resolveChromeProfileDir(profileDir?: string): string {
 
   return resolveSharedChromeProfileDir({
     envNames: ["BAOYU_CHROME_PROFILE_DIR"],
-    appDataDirName: "baoyu-skills",
+    appDataDirName: "xuanting-skills",
     profileDirName: "chrome-profile",
   });
 }

@@ -111,19 +111,19 @@ header: "Save"
 question: "Where to save preferences?"
 options:
   - label: "Project"
-    description: ".baoyu-skills/ (this project only)"
+    description: ".xuanting-skills/ (this project only)"
   - label: "User"
-    description: "~/.baoyu-skills/ (all projects)"
+    description: "~/.xuanting-skills/ (all projects)"
 ```
 
 ## Save Locations
 
 | Choice | Path | Scope |
 |--------|------|-------|
-| Project | `.baoyu-skills/infographic/EXTEND.md` | Current project |
-| User | `~/.baoyu-skills/infographic/EXTEND.md` | All projects |
+| Project | `.xuanting-skills/infographic/EXTEND.md` | Current project |
+| User | `~/.xuanting-skills/infographic/EXTEND.md` | All projects |
 
-XDG path (`${XDG_CONFIG_HOME:-$HOME/.config}/baoyu-skills/infographic/EXTEND.md`) is also recognized at read time but not offered as a save target during first-time setup.
+XDG path (`${XDG_CONFIG_HOME:-$HOME/.config}/xuanting-skills/infographic/EXTEND.md`) is also recognized at read time but not offered as a save target during first-time setup.
 
 ## After Setup
 

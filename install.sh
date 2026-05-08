@@ -56,9 +56,9 @@ echo
 echo "Result: $linked new, $replaced relinked, $skipped already linked."
 echo
 echo "Next steps:"
-echo "  1. Set GRSAI_API_KEY (and any other provider keys) in ~/.baoyu-skills/.env"
-echo "     mkdir -p ~/.baoyu-skills && chmod 700 ~/.baoyu-skills"
-echo "     echo 'GRSAI_API_KEY=sk-your-key' >> ~/.baoyu-skills/.env"
-echo "     chmod 600 ~/.baoyu-skills/.env"
+echo "  1. Set GRSAI_API_KEY (and any other provider keys) in ~/.xuanting-skills/.env"
+echo "     mkdir -p ~/.xuanting-skills && chmod 700 ~/.xuanting-skills"
+echo "     echo 'GRSAI_API_KEY=sk-your-key' >> ~/.xuanting-skills/.env"
+echo "     chmod 600 ~/.xuanting-skills/.env"
 echo "  2. Restart Claude Code (or run /reload-plugins) to pick up the new skills."
 echo "  3. Try it: /image-cards <your-draft.md> --style notion --layout dense"

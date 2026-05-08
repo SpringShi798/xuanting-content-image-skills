@@ -131,12 +131,12 @@ function parseWechatExtend(content: string): WechatExtendConfig {
 
 export function loadWechatExtendConfig(): WechatExtendConfig {
   const paths = [
-    path.join(process.cwd(), ".baoyu-skills", "post-to-wechat", "EXTEND.md"),
+    path.join(process.cwd(), ".xuanting-skills", "post-to-wechat", "EXTEND.md"),
     path.join(
       process.env.XDG_CONFIG_HOME || path.join(os.homedir(), ".config"),
-      "baoyu-skills", "post-to-wechat", "EXTEND.md"
+      "xuanting-skills", "post-to-wechat", "EXTEND.md"
     ),
-    path.join(os.homedir(), ".baoyu-skills", "post-to-wechat", "EXTEND.md"),
+    path.join(os.homedir(), ".xuanting-skills", "post-to-wechat", "EXTEND.md"),
   ];
   for (const p of paths) {
     try {
@@ -266,14 +266,14 @@ function resolveCredentialSource(
 
   throw new Error(
     `Missing WECHAT_APP_ID or WECHAT_APP_SECRET${hint}.\n` +
-    "Set via EXTEND.md account config, environment variables, or .baoyu-skills/.env file." +
+    "Set via EXTEND.md account config, environment variables, or .xuanting-skills/.env file." +
     partialHint
   );
 }
 
 export function loadCredentials(account?: ResolvedAccount): LoadedCredentials {
-  const cwdEnvPath = path.join(process.cwd(), ".baoyu-skills", ".env");
-  const homeEnvPath = path.join(os.homedir(), ".baoyu-skills", ".env");
+  const cwdEnvPath = path.join(process.cwd(), ".xuanting-skills", ".env");
+  const homeEnvPath = path.join(os.homedir(), ".xuanting-skills", ".env");
   const cwdEnv = loadEnvFile(cwdEnvPath);
   const homeEnv = loadEnvFile(homeEnvPath);
 
@@ -294,15 +294,15 @@ export function loadCredentials(account?: ResolvedAccount): LoadedCredentials {
     const prefixedKeyLabel = `${prefix}APP_ID/${prefix}APP_SECRET`;
     sources.push(
       buildCredentialSource(`process.env (${prefixedKeyLabel})`, process.env, `${prefix}APP_ID`, `${prefix}APP_SECRET`),
-      buildCredentialSource(`<cwd>/.baoyu-skills/.env (${prefixedKeyLabel})`, cwdEnv, `${prefix}APP_ID`, `${prefix}APP_SECRET`),
-      buildCredentialSource(`~/.baoyu-skills/.env (${prefixedKeyLabel})`, homeEnv, `${prefix}APP_ID`, `${prefix}APP_SECRET`),
+      buildCredentialSource(`<cwd>/.xuanting-skills/.env (${prefixedKeyLabel})`, cwdEnv, `${prefix}APP_ID`, `${prefix}APP_SECRET`),
+      buildCredentialSource(`~/.xuanting-skills/.env (${prefixedKeyLabel})`, homeEnv, `${prefix}APP_ID`, `${prefix}APP_SECRET`),
     );
   }
 
   sources.push(
     buildCredentialSource("process.env", process.env, "WECHAT_APP_ID", "WECHAT_APP_SECRET"),
-    buildCredentialSource("<cwd>/.baoyu-skills/.env", cwdEnv, "WECHAT_APP_ID", "WECHAT_APP_SECRET"),
-    buildCredentialSource("~/.baoyu-skills/.env", homeEnv, "WECHAT_APP_ID", "WECHAT_APP_SECRET"),
+    buildCredentialSource("<cwd>/.xuanting-skills/.env", cwdEnv, "WECHAT_APP_ID", "WECHAT_APP_SECRET"),
+    buildCredentialSource("~/.xuanting-skills/.env", homeEnv, "WECHAT_APP_ID", "WECHAT_APP_SECRET"),
   );
 
   return resolveCredentialSource(sources, account);

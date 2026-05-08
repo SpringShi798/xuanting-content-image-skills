@@ -210,9 +210,9 @@ Check EXTEND.md in priority order — the first one found wins:
 
 | Priority | Path | Scope |
 |----------|------|-------|
-| 1 | `.baoyu-skills/infographic/EXTEND.md` | Project |
-| 2 | `${XDG_CONFIG_HOME:-$HOME/.config}/baoyu-skills/infographic/EXTEND.md` | XDG |
-| 3 | `$HOME/.baoyu-skills/infographic/EXTEND.md` | User home |
+| 1 | `.xuanting-skills/infographic/EXTEND.md` | Project |
+| 2 | `${XDG_CONFIG_HOME:-$HOME/.config}/xuanting-skills/infographic/EXTEND.md` | XDG |
+| 3 | `$HOME/.xuanting-skills/infographic/EXTEND.md` | User home |
 
 | Result | Action |
 |--------|--------|
