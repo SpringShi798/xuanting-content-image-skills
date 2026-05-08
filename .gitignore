@@ -1,0 +1,28 @@
+# dependencies
+node_modules/
+bun.lockb
+
+# logs
+*.log
+.npm
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# build output
+dist/
+build/
+
+# secrets / configs (should live in ~/.baoyu-skills/)
+.env
+.env.local
+.baoyu-skills/
+
+# generated content (image-cards work dirs etc)
+image-cards/
+output/
+prompts/*.png
+*.tmp
