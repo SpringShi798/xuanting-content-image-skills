@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import { execFileSync } from "node:child_process";
 import type { CliArgs } from "../types";
 
-const GRSAI_KNOWN_MODELS = [
+const GRSAI_NANO_BANANA_MODELS = [
   "nano-banana",
   "nano-banana-fast",
   "nano-banana-2",
@@ -15,6 +15,12 @@ const GRSAI_KNOWN_MODELS = [
   "nano-banana-pro-4k-vip",
 ];
 
+const GRSAI_GPT_IMAGE_MODELS = [
+  "gpt-image-2",
+  "gpt-image-1.5",
+  "gpt-image-1",
+];
+
 export function getDefaultModel(): string {
   return process.env.GRSAI_IMAGE_MODEL || "nano-banana-pro";
 }
@@ -22,9 +28,44 @@ export function getDefaultModel(): string {
 export function isGrsaiModel(model: string): boolean {
   const normalized = model.trim();
   return (
-    GRSAI_KNOWN_MODELS.includes(normalized) ||
-    normalized.startsWith("nano-banana")
+    GRSAI_NANO_BANANA_MODELS.includes(normalized) ||
+    GRSAI_GPT_IMAGE_MODELS.includes(normalized) ||
+    normalized.startsWith("nano-banana") ||
+    normalized.startsWith("gpt-image")
   );
+}
+
+function isGptImageModel(model: string): boolean {
+  const normalized = model.trim();
+  return (
+    GRSAI_GPT_IMAGE_MODELS.includes(normalized) ||
+    normalized.startsWith("gpt-image")
+  );
+}
+
+function aspectRatioToGptImageSize(aspectRatio: string | null): string {
+  // GPT Image 2 expects `size` as pixel dimensions (W x H).
+  // Map common aspect ratios to OpenAI-supported sizes.
+  if (!aspectRatio) return "1024x1024";
+  const ratio = aspectRatio.trim();
+  switch (ratio) {
+    case "1:1":
+      return "1024x1024";
+    case "3:4":
+      return "768x1024";
+    case "4:3":
+      return "1024x768";
+    case "9:16":
+      return "1024x1792";
+    case "16:9":
+      return "1792x1024";
+    case "2:3":
+      return "832x1216";
+    case "3:2":
+      return "1216x832";
+    default:
+      return "1024x1024";
+  }
 }
 
 function getGrsaiApiKey(): string | null {
@@ -150,6 +191,99 @@ async function postGrsai(payload: unknown): Promise<GrsaiResponse> {
   return postGrsaiViaCurl(payload, apiKey);
 }
 
+interface GptImageSseEvent {
+  id?: string;
+  status?: "running" | "violation" | "succeeded" | "failed";
+  progress?: number;
+  results?: Array<{ url: string; width?: number; height?: number }>;
+  error?: string;
+  failure_reason?: string;
+}
+
+async function postGrsaiGptImageViaCurl(
+  payload: unknown,
+  apiKey: string,
+): Promise<string> {
+  const url = `${getGrsaiBaseUrl()}/v1/draw/completions`;
+  const proxy = getHttpProxy();
+  const bodyStr = JSON.stringify(payload);
+  const args = [
+    "-sN", // -s silent, -N disables buffering for SSE streams
+    "--connect-timeout",
+    "30",
+    "--max-time",
+    "300",
+    ...(proxy ? ["-x", proxy] : []),
+    url,
+    "-H",
+    "Content-Type: application/json",
+    "-H",
+    `Authorization: Bearer ${apiKey}`,
+    "-d",
+    "@-",
+  ];
+
+  let result = "";
+  try {
+    result = execFileSync("curl", args, {
+      input: bodyStr,
+      encoding: "utf8",
+      maxBuffer: 100 * 1024 * 1024,
+      timeout: 310000,
+    });
+  } catch (error) {
+    const e = error as { message?: string; stderr?: string | Buffer };
+    const stderrText =
+      typeof e.stderr === "string"
+        ? e.stderr
+        : e.stderr
+          ? e.stderr.toString("utf8")
+          : "";
+    const details = stderrText.trim() || e.message || "curl request failed";
+    throw new Error(`grsai GPT Image request failed via curl: ${details}`);
+  }
+
+  if (!result || !result.trim()) {
+    throw new Error(
+      "grsai GPT Image returned empty stream — check GRSAI_API_KEY and account credit",
+    );
+  }
+
+  // Parse SSE stream: lines starting with "data: " contain JSON events.
+  const lines = result.split(/\r?\n/);
+  let lastEvent: GptImageSseEvent | null = null;
+  for (const line of lines) {
+    if (!line.startsWith("data: ")) continue;
+    const jsonStr = line.slice("data: ".length).trim();
+    if (!jsonStr) continue;
+    let event: GptImageSseEvent;
+    try {
+      event = JSON.parse(jsonStr) as GptImageSseEvent;
+    } catch {
+      continue;
+    }
+    lastEvent = event;
+    if (event.status === "failed") {
+      throw new Error(
+        `grsai GPT Image generation failed: ${event.failure_reason || event.error || "no detail"}`,
+      );
+    }
+    if (event.status === "violation") {
+      throw new Error(
+        `grsai GPT Image content policy violation: ${event.error || event.failure_reason || "no detail"}`,
+      );
+    }
+    if (event.status === "succeeded") {
+      const url = event.results?.[0]?.url;
+      if (url) return url;
+    }
+  }
+
+  throw new Error(
+    `grsai GPT Image: no succeeded event found in SSE stream. Last event: ${JSON.stringify(lastEvent)}`,
+  );
+}
+
 async function downloadImage(url: string): Promise<Uint8Array> {
   // Same reason as postGrsai: default to curl so macOS system proxies work.
   if (process.env.GRSAI_USE_FETCH === "1") {
@@ -192,11 +326,34 @@ export async function generateImage(
   model: string,
   args: CliArgs,
 ): Promise<Uint8Array> {
+  const apiKey = getGrsaiApiKey();
+  if (!apiKey) throw new Error("GRSAI_API_KEY is required");
+
   const refImages: string[] = [];
   for (const refPath of args.referenceImages) {
     refImages.push(await readImageAsBase64DataUrl(refPath));
   }
 
+  // GPT Image 2 family: different endpoint (/v1/draw/completions), SSE stream,
+  // OpenAI-style payload (size as pixel dimensions, image_urls for refs).
+  if (isGptImageModel(model)) {
+    const size = aspectRatioToGptImageSize(args.aspectRatio);
+    const payload: Record<string, unknown> = {
+      model,
+      prompt,
+      size,
+      n: 1,
+    };
+    if (refImages.length > 0) {
+      payload.image_urls = refImages;
+    }
+    console.log(`Generating image with grsai GPT Image (${model}, size=${size})...`);
+    const url = await postGrsaiGptImageViaCurl(payload, apiKey);
+    console.log("Generation completed, downloading...");
+    return downloadImage(url);
+  }
+
+  // nano-banana family: /v1/api/generate, sync JSON, native grsai schema.
   const payload: Record<string, unknown> = {
     model,
     prompt,
