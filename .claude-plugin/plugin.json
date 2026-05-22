@@ -1,0 +1,23 @@
+{
+  "name": "xuanting-content-image-skills",
+  "displayName": "Xuanting Content & Image Skills",
+  "description": "9 content-creation skills for social media producers: image-cards / cover-image / infographic / article-illustrator / imagine (multi-provider AI image gen including grsai/nano-banana for Asia) / diagram / format-markdown / url-to-markdown / post-to-wechat. Fork of JimLiu/baoyu-skills with the grsai provider added for Asia-friendly image generation.",
+  "version": "1.0.0",
+  "author": {
+    "name": "SpringShi798",
+    "url": "https://github.com/SpringShi798"
+  },
+  "homepage": "https://github.com/SpringShi798/xuanting-content-image-skills",
+  "repository": "https://github.com/SpringShi798/xuanting-content-image-skills.git",
+  "license": "MIT",
+  "keywords": [
+    "content-creation",
+    "image-generation",
+    "infographic",
+    "xiaohongshu",
+    "wechat",
+    "ai-image",
+    "grsai",
+    "nano-banana"
+  ]
+}

@@ -2,7 +2,7 @@
 
 A focused fork of **[JimLiu/baoyu-skills](https://github.com/JimLiu/baoyu-skills)** — picks the 9 most useful skills for content production, drops the rest, renames them to bare names (no `baoyu-` prefix), and adds a **grsai provider** so all image generation works through grsai's `nano-banana` series (Gemini 2.5/3 Pro Image via the grsai gateway).
 
-> Personal toolkit for building knowledge-card content (小红书 image cards, infographics, system diagrams). Not a marketplace plugin — install via `git clone + install.sh`.
+> Personal toolkit for building knowledge-card content (小红书 image cards, infographics, system diagrams). Installable as a Claude Code plugin (one command) or via the legacy `install.sh` symlink workflow.
 
 ---
 
@@ -78,6 +78,23 @@ echo 'GRSAI_API_KEY=sk-your-key-here' >> ~/.xuanting-skills/.env
 
 ## Install
 
+### Option A · As a Claude Code plugin (recommended)
+
+Inside Claude Code, run:
+
+```
+/plugin marketplace add SpringShi798/xuanting-content-image-skills
+/plugin install xuanting-content-image-skills
+```
+
+This pulls the repo, registers all 9 skills, and version-manages updates for you. Restart Claude Code (or `/reload-plugins`) afterwards.
+
+To update later: `/plugin update xuanting-content-image-skills`.
+
+### Option B · Legacy symlink install
+
+For users who prefer to keep the source repo on disk and symlink into `~/.claude/skills/`:
+
 ```bash
 git clone https://github.com/SpringShi798/xuanting-content-image-skills.git ~/projects/xuanting-content-image-skills
 cd ~/projects/xuanting-content-image-skills
@@ -88,11 +105,7 @@ bash install.sh
 
 After installing, **restart Claude Code** (or `/reload-plugins`) to pick up the new skills.
 
-## Update
-
-```bash
-cd ~/projects/xuanting-content-image-skills && git pull && bash install.sh
-```
+To update: `cd ~/projects/xuanting-content-image-skills && git pull && bash install.sh`.
 
 ## Configuration
 
