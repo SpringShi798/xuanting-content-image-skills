@@ -22,7 +22,7 @@ build/
 .xuanting-skills/
 
 # generated content (image-cards work dirs etc)
-image-cards/
+/image-cards/
 output/
 prompts/*.png
 *.tmp
