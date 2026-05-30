@@ -120,6 +120,7 @@ Details: `references/image-text-posting.md`.
 - [ ] Step 1: Determine input type
 - [ ] Step 2: Select method and configure credentials
 - [ ] Step 3: Resolve theme/color and validate metadata
+- [ ] Step 3.5: Pre-publish render self-check + preview confirm ⚠️ (publish gate)
 - [ ] Step 4: Publish to WeChat
 - [ ] Step 5: Report completion
 ```
@@ -168,6 +169,18 @@ Ask method unless specified in EXTEND.md or CLI:
 Auto-generation: title = first H1/H2 or first sentence; summary = first paragraph, truncated to 120 chars.
 
 4. **Cover image** (required for API `article_type=news`): CLI `--cover` → frontmatter (`coverImage` / `featureImage` / `cover` / `image`) → `imgs/cover.png` → first inline image → stop and request one if still missing.
+
+### Step 3.5: Pre-publish Render Self-Check + Preview Confirm ⚠️ (publish gate)
+
+**NEVER skip.** A mass-sent (群发) article can only be edited a limited number of times in the backend, so this is the only line of defense. (2026-05-29: this step was skipped and a version missing its first section heading got published.)
+
+1. **Render locally, do NOT publish yet**: `${BUN_X} {baseDir}/scripts/md-to-wechat.ts <file> --theme <theme> [--color <color>]` → note the returned `htmlPath` and `contentImages`.
+2. **Heading-integrity check (MANDATORY)**: compare the count of `##`/`###` headings in the source markdown against the count of `<h2`/`<h3` in the rendered HTML.
+   - **Mismatch = a heading was eaten.** Known bug: `md-to-wechat` strips the **first heading in the body**, treating it as the article title.
+   - **Fix**: prepend one line `# <article title>` to the top of the body as a decoy (frontmatter already supplies the real title, so this H1 gets stripped and never displays). Re-render and re-check until heading counts match.
+3. **Format self-check**: every image placeholder resolved (`contentImages` count == images in md), blockquotes / bold / lists converted correctly, no stray raw markdown.
+4. **Show the user before publishing**: report (a) the list of headings, (b) image count + rough word count, (c) the rendered `htmlPath` (or a screenshot). **Wait for the user to confirm format + content before proceeding to Step 4.**
+   - Only skip the (4) confirmation if the user explicitly says "直接发 / 不用看"; checks (1)(2)(3) still run regardless.
 
 ### Step 4: Publish
 
